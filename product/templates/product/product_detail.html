@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<article>
+    <h1>{{ product.title }}</h1>
+    <img src="{{ product.image.url }}" alt="{{ product.title }}">
+    <p>{{ product.description }}</p>
+    <p>Price: {{ product.price }}</p>
+    <p>Seller Contact: {{ product.seller_contact }}</p>
+    {% if product.available %}
+    <p>This product is available.</p>
+    {% else %}
+    <p>This product is not available.</p>
+    {% endif %}
+</article>
+{% endblock %}

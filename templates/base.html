@@ -1,0 +1,43 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AltLiebe</title>
+
+    <!-- Bootstrap -->
+
+    <!-- Font Awesome -->
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+    <header>
+        <!-- Navigation Bar -->
+        <nav>
+            <ul>
+                <li><a href="{% url 'product_list' %}">Browse Products</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <!-- Main content will be injected here by other templates that extend base.html -->
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <!-- Footer Content -->
+        <p>© 2024 AltLiebe. Mawadda Kadi.</p>
+    </footer>
+    
+    <!-- scripts -->
+
+</body>
+
+</html>
