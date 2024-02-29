@@ -19,14 +19,14 @@ def register(request):
         form = UserRegisterForm()
     return render(request, 'users/register.html', {'form': form})
 
+
 @login_required
 def profile(request):
-    return render(request, 'users/profile.html')
-
+    # Passes the user's own profile to the template
+    return render(request, 'users/profile.html', {'profile': request.user.profile, 'own_profile': True})
 
 def profile_view(request, username):
     user = get_object_or_404(User, username=username)
-    profile = user.profile
-    return render(request, 'users/profile.html', {'profile': profile})
-
-
+    # Checks if the requested profile belongs to the logged-in user
+    own_profile = request.user == user
+    return render(request, 'users/profile.html', {'profile': user.profile, 'own_profile': own_profile})
