@@ -2,6 +2,10 @@ from django.shortcuts import render, get_object_or_404
 from django.views import generic
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView
+from django.views.generic.edit import UpdateView
+from django.views.generic.edit import DeleteView
+from django.urls import reverse_lazy
 from django.http import HttpResponse
 from .models import Product
 
@@ -24,3 +28,22 @@ class ProductDetail(DetailView):
         """Ensure only available products can be viewed."""
         return super().get_queryset().filter(available=True)
 
+class ProductCreate(CreateView):
+    model = Product
+    fields = ['title', 'description', 'price', 'slug', 'available', 'created_at']
+    template_name = 'product/product_form.html'
+    # Redirect to product list view after creation
+    success_url = reverse_lazy('product-list')
+
+class ProductUpdate(UpdateView):
+    model = Product
+    fields = ['title', 'description', 'price', 'slug', 'available']
+    template_name = 'product/product_form.html'
+    # Redirect to product list view after updte
+    success_url = reverse_lazy('product-list')
+
+class ProductDelete(DeleteView):
+    model = Product
+    template_name = 'product/product_confirm_delete.html'
+    # Redirect to product list view after deletion
+    success_url = reverse_lazy('product-list')
