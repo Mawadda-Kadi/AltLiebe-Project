@@ -22,6 +22,12 @@
         <nav>
             <ul>
                 <li><a href="{% url 'product_list' %}">Browse Products</a></li>
+                {% if user.is_authenticated %}
+                <li><a href="{% url 'profile' %}">My Profile</a></li>
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+                {% else %}
+                <li><a href="{% url 'login' %}">Login</a></li>
+                <li><a href="{% url 'register' %}">Sign Up</a></li>
             </ul>
         </nav>
     </header>
@@ -35,7 +41,7 @@
         <!-- Footer Content -->
         <p>© 2024 AltLiebe. Mawadda Kadi.</p>
     </footer>
-    
+
     <!-- scripts -->
 
 </body>
