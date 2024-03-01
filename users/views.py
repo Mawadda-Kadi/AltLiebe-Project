@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
-from django.contrib import messages
+from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from .forms import UserRegisterForm
 
 # Create your views here.
@@ -21,6 +22,8 @@ def register(request):
     return render(request, 'users/register.html', {'form': form})
 
 class CustomLoginView(LoginView):
+    template_name = 'users/login.html'
+
     def get_success_url(self):
         username = self.request.user.username
         return reverse_lazy('user-profile', kwargs={'username': username})
