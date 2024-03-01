@@ -35,9 +35,15 @@
                         <a class="nav-link" href="{% url 'product-list' %}">Browse
                             Products</a>
                     </li>
-                    {% if own_profile %}
+                    {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'user-profile' username=user.username %}">My Profile</a>
+                        <a class="nav-link" href="{% url 'product-create' %}">Add
+                            Product</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            href="{% url 'user-profile' username=user.username %}">My
+                            Profile</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'logout' %}">Logout</a>
@@ -53,6 +59,14 @@
                 </ul>
             </div>
         </nav>
+        <!-- Search Form -->
+        <form class="form-inline my-2 my-lg-0" method="get"
+            action="{% url 'product-list' %}">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search"
+                aria-label="Search" name="q">
+            <button class="btn btn-outline-success my-2 my-sm-0"
+                type="submit">Search</button>
+        </form>
     </header>
     <main>
         <div class="container mt-4">
@@ -67,7 +81,7 @@
         <p>© 2024 AltLiebe. Mawadda Kadi.</p>
     </footer>
 
-    <!-- JavaScript and Bootstrap JS -->
+    <!-- jQuery, Popper.js, and Bootstrap JS -->
     <script
         src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script

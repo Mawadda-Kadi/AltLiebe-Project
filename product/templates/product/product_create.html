@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Add New Product</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="id_title">Title</label>
+            <input type="text" class="form-control" id="id_title" name="title"
+                placeholder="Enter product title" required>
+        </div>
+        <div class="form-group">
+            <label for="id_description">Description</label>
+            <textarea class="form-control" id="id_description"
+                name="description" rows="3"
+                placeholder="Enter product description" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="id_price">Price</label>
+            <input type="number" step="0.01" class="form-control" id="id_price"
+                name="price" placeholder="0.00" required>
+        </div>
+        <div class="form-group">
+            <label for="id_slug">Slug</label>
+            <input type="text" class="form-control" id="id_slug" name="slug"
+                placeholder="Unique identifier" required>
+        </div>
+
+        <div class="form-group">
+            <label for="id_image">Image</label>
+            <input type="file" class="form-control-file" id="id_image" name="image">
+        </div>
+        <div class="form-group">
+            <label for="id_seller_contact">Seller Contact</label>
+            <input type="text" class="form-control" id="id_seller_contact"
+                name="seller_contact" placeholder="Enter contact info"
+                required>
+        </div>
+        <div class="form-group">
+            <label for="id_location">Location</label>
+            <input type="text" class="form-control" id="id_location"
+                name="location" placeholder="Enter product location" required>
+        </div>
+        <div class="form-group">
+            <label for="id_status">Status</label>
+            <select class="form-control" id="id_status" name="status">
+                <option value="0">Used</option>
+                <option value="1">New</option>
+                <option value="2">Handmade</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox"
+                    id="id_available" name="available" checked>
+                <label class="form-check-label" for="id_available">
+                    Available
+                </label>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock %}
