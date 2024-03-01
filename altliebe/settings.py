@@ -46,13 +46,18 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'product',
-    'users',
+    'users.apps.UsersConfig',
     'crispy_forms',
     "crispy_bootstrap4",
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+#Redirect users to the root URL
+LOGIN_REDIRECT_URL = '/'
+#Redirect users to the path that matches the name 'login'
+LOGIN_URL = 'login'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

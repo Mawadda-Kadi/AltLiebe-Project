@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
+from django.contrib.auth.views import LoginView
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm
@@ -18,6 +19,11 @@ def register(request):
     else:
         form = UserRegisterForm()
     return render(request, 'users/register.html', {'form': form})
+
+class CustomLoginView(LoginView):
+    def get_success_url(self):
+        username = self.request.user.username
+        return reverse_lazy('user-profile', kwargs={'username': username})
 
 
 @login_required
