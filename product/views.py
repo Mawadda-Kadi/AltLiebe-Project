@@ -43,7 +43,7 @@ class ProductDetail(DetailView):
 class ProductCreate(LoginRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
-    template_name = 'product/product_form.html'
+    template_name = 'product/product_create.html'
     # Redirect to product list view after creation
     success_url = reverse_lazy('product-list')
 
