@@ -13,7 +13,10 @@
         <p>{{ product.description }}</p>
         <p>Price: {{ product.price }}</p>
         <p>Status: {{ product.get_status_display }}</p>
+        <p>Availability: {{ product.get_availability_display }}</p>
+        {% if product.location %}
         <p>Location: {{ product.location }}</p>
+        {% endif %}
         <p>Posted on: {{ product.created_at|date:"Y-m-d" }}</p>
     </article>
     {% empty %}

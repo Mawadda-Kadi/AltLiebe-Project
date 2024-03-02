@@ -3,14 +3,19 @@
 {% block content %}
 <article>
     <h1>{{ product.title }}</h1>
-    <img src="{{ product.image.url }}" alt="{{ product.title }}">
+    {% if product.image %}
+    <img src="{{ product.image.url }}" alt="{{ product.title }}"
+        style="width:100px; height:auto;">
+    {% endif %}
     <p>{{ product.description }}</p>
     <p>Price: {{ product.price }}</p>
-    <p>Seller Contact: {{ product.seller_contact }}</p>
-    {% if product.available %}
+    <p>Seller: {{ product.seller }}</p>
+    {% if product.availability == 0 %}
     <p>This product is available.</p>
+    {% elif product.availability == 1 %}
+    <p>This product is reserved.</p>
     {% else %}
-    <p>This product is not available.</p>
+    <p>This product is sold.</p>
     {% endif %}
 </article>
 {% endblock %}

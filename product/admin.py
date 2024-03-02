@@ -5,8 +5,8 @@ from .models import Product
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('title', 'slug', 'status', 'created_at', 'price', 'available')
-    list_filter = ('status', 'created_at', 'available')
+    list_display = ('title', 'slug', 'status', 'created_at', 'price', 'availability')
+    list_filter = ('status', 'created_at', 'availability')
     search_fields = ('title', 'description')
     prepopulated_fields = {'slug': ('title',)}
     date_hierarchy = 'created_at'

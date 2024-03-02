@@ -4,7 +4,7 @@ from django.utils.text import slugify
 from django.contrib.auth.models import User
 import logging
 
-
+AVAILABILITY = ((0, "available"), (1, "reserved"), (2, "sold"))
 STATUS = ((0, "used"), (1, "new"), (2, "handmade"))
 
 # Get an instance of a logger
@@ -20,7 +20,7 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     seller = models.ForeignKey(User, on_delete=models.CASCADE, related_name="products")
     seller_contact = models.CharField(max_length=200)
-    available = models.BooleanField(default=True)
+    availability = models.IntegerField(choices=AVAILABILITY, default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     location = models.CharField(max_length=255)
     status = models.IntegerField(choices=STATUS, default=0)

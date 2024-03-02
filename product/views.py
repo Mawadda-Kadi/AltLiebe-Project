@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
 from django.views import generic
 from django.views.generic import ListView, CreateView, UpdateView, DetailView, DeleteView
@@ -23,7 +24,7 @@ class ProductList(generic.ListView):
     paginate_by = 4
 
     def product_list(request):
-        products = Product.objects.all()
+        products = Product.objects.filter(Q(availability=0) | Q(availability=1))
         return render(request, 'product/product_list.html', {'products': products})
 
     def get_queryset(self):
@@ -37,7 +38,7 @@ class ProductDetail(DetailView):
 
     def get_queryset(self):
         """Ensure only available products can be viewed."""
-        return super().get_queryset().filter(available=True)
+        return super().get_queryset().all()
 
 class ProductCreate(LoginRequiredMixin, CreateView):
     model = Product
@@ -59,7 +60,7 @@ class ProductCreate(LoginRequiredMixin, CreateView):
 
 class ProductUpdate(UpdateView):
     model = Product
-    fields = ['title', 'description', 'price', 'slug', 'available']
+    fields = ['title', 'description', 'price', 'status', 'availability']
     template_name = 'product/product_form.html'
     # Redirect to product list view after updte
     success_url = reverse_lazy('product-list')
