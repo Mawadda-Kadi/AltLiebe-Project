@@ -2,20 +2,34 @@ from django.shortcuts import render, get_object_or_404
 from django.views import generic
 from django.views.generic import ListView, CreateView, UpdateView, DetailView, DeleteView
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from .models import Product
 from .forms import ProductForm
+import logging
+
+
+logger = logging.getLogger(__name__)
+
+def my_function():
+    logger.debug('This is a debug message')
 
 # Create your views here.
 
 class ProductList(generic.ListView):
     model = Product
     template_name = "product/product_list.html"
+    context_object_name = 'products'
     paginate_by = 4
+
+    def product_list(request):
+        products = Product.objects.all()
+        return render(request, 'product/product_list.html', {'products': products})
 
     def get_queryset(self):
         """Override to customize the query."""
-        return Product.objects.filter(available=True).order_by('-created_at')
+        return Product.objects.all().order_by('-created_at')
+
 
 class ProductDetail(DetailView):
     model = Product
@@ -25,12 +39,21 @@ class ProductDetail(DetailView):
         """Ensure only available products can be viewed."""
         return super().get_queryset().filter(available=True)
 
-class ProductCreate(CreateView):
+class ProductCreate(LoginRequiredMixin, CreateView):
     model = Product
-    fields = ['title', 'description', 'price', 'slug', 'available', 'created_at']
+    form_class = ProductForm
     template_name = 'product/product_form.html'
     # Redirect to product list view after creation
     success_url = reverse_lazy('product-list')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['object'] = None
+        return context
+
+    def form_valid(self, form):
+        form.instance.seller = self.request.user
+        return super(ProductCreate, self).form_valid(form)
 
 class ProductUpdate(UpdateView):
     model = Product

@@ -4,14 +4,19 @@
 <section>
     {% for product in products %}
     <article>
-        <h2><a href="{% url 'product_detail' product.id %}">{{ product.title
-                }}</a></h2>
-        <img src="{{ product.image.url }}" alt="{{ product.title }}">
+        <h2>{{ product.title }}</h2>
+        {% if product.image %}
+        <img src="{{ product.image.url }}" alt="{{ product.title }}"
+            style="width:100px; height:auto;">
+        {% endif %}
         <p>{{ product.description }}</p>
         <p>Price: {{ product.price }}</p>
+        <p>Status: {{ product.get_status_display }}</p>
         <p>Location: {{ product.location }}</p>
-        <p>Posted on: {{ product.created_at }}</p>
+        <p>Posted on: {{ product.created_at|date:"Y-m-d" }}</p>
     </article>
+    {% empty %}
+    <p>No products found.</p>
     {% endfor %}
 </section>
 {% endblock %}

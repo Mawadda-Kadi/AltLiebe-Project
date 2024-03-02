@@ -1,9 +1,15 @@
 from django.db import models
 from django.urls import reverse
+from django.utils.text import slugify
 from django.contrib.auth.models import User
+import logging
 
 
 STATUS = ((0, "used"), (1, "new"), (2, "handmade"))
+
+# Get an instance of a logger
+logger = logging.getLogger(__name__)
+
 
 # Create your models here.
 class Product(models.Model):
@@ -21,3 +27,8 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return reverse('product-detail', kwargs={'slug': self.slug})
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super(Product, self).save(*args, **kwargs)
